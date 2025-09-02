@@ -129,7 +129,6 @@ nav ul li a:hover {
   align-items: center;
   min-height: 80vh;
   text-align: center;
-  background: var(--header-footer-bg);
   color: var(--text);
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -163,7 +162,7 @@ nav ul li a:hover {
 }
 
 .btn:hover {
-  background: #5e35b1; /* Darker violet */
+  background: #5e35b1;
 }
 
 .btn-group {
@@ -188,28 +187,6 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
-}
-
-.card {
-  background: var(--card-bg);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.card img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-bottom: 15px;
 }
 
 .skills ul {
@@ -656,4 +633,14 @@ form {
   font-style: italic;
   color: var(--primary);
   margin-bottom: 10px;
+}
+
+#comet-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none; 
 }

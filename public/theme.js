@@ -3,7 +3,7 @@ const root = document.documentElement;
 
 document.addEventListener("DOMContentLoaded", function () {
   new Typed("#typed-role", {
-    strings: ["Front-End Developer", "UI Enthusiast", "Web Designer"],
+    strings: ["Front-End Developer", "Web Designer"],
     typeSpeed: 70,
     backSpeed: 40,
     backDelay: 1500,
@@ -91,3 +91,80 @@ toggleBtn.addEventListener("click", () => {
     loadParticles("dark");
   }
 });
+
+// === 🌠 Comet Effect ===
+const cometCanvas = document.createElement("canvas");
+cometCanvas.id = "comet-canvas";
+document.body.appendChild(cometCanvas);
+
+const cometCtx = cometCanvas.getContext("2d");
+
+function resizeCanvas() {
+  cometCanvas.width = window.innerWidth;
+  cometCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+class Comet {
+  constructor() {
+    this.reset();
+  }
+
+  reset() {
+    this.x = Math.random() * cometCanvas.width;
+    this.y = -50;
+    this.vx = 2 + Math.random() * 2;
+    this.vy = 4 + Math.random() * 2;
+    this.trail = [];
+    this.maxTrail = 20;
+    this.life = 0;
+    this.maxLife = 200 + Math.random() * 100;
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.trail.push({ x: this.x, y: this.y });
+
+    if (this.trail.length > this.maxTrail) this.trail.shift();
+
+    this.life++;
+    if (this.life > this.maxLife || this.x > cometCanvas.width + 100 || this.y > cometCanvas.height + 100) {
+      this.reset();
+    }
+  }
+
+  draw(ctx) {
+    for (let i = 0; i < this.trail.length; i++) {
+      const opacity = i / this.trail.length;
+      ctx.beginPath();
+      ctx.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(173,216,230,${opacity})`;
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = "white";
+    ctx.fill();
+  }
+}
+
+let comets = [new Comet()];
+
+function animateComets() {
+  cometCtx.clearRect(0, 0, cometCanvas.width, cometCanvas.height);
+
+  comets.forEach(comet => {
+    comet.update();
+    comet.draw(cometCtx);
+  });
+
+  if (Math.random() < 0.005 && comets.length < 3) {
+    comets.push(new Comet());
+  }
+
+  requestAnimationFrame(animateComets);
+}
+
+animateComets();
